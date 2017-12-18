@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "FibonacciService", "FibonacciService\", "{E985882F-6994-4F8A-B7BA-F260DD115967}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv3.5"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_51365"
+		Debug.AspNetCompiler.PhysicalPath = "FibonacciService\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51365\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_51365"
+		Release.AspNetCompiler.PhysicalPath = "FibonacciService\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_51365\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "51365"
+		SlnRelativePath = "FibonacciService\"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E985882F-6994-4F8A-B7BA-F260DD115967}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E985882F-6994-4F8A-B7BA-F260DD115967}.Debug|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {95BF79D8-C16A-4F52-AA7F-3BF2C99997C6}
+	EndGlobalSection
+EndGlobal
