@@ -4,7 +4,7 @@ LemonWay Challenge WebService
 Hey there,
 I just finished your challenge.
 Here are few steps to follow in case of emrgency. If those don't help, feel free to send me a message at quurnet@gmail.com
-
+```
 1) Clone or download the project
 
 2) Open the solution "FibonacciService.sln"
@@ -16,7 +16,7 @@ Here are few steps to follow in case of emrgency. If those don't help, feel free
 
 First let verify your "packages.config" file
 Open the "packages.config" file of the "FibonacciService" project
-Spot the line "<package id="Newtonsoft.Json" version="10.0.3" targetFramework="net35" />"
+Spot the line [<package id="Newtonsoft.Json" version="10.0.3" targetFramework="net35" />]
 Delete the line, we'll reinstall the package from scratch
 Save the file (Ctrl+S)
     
@@ -32,7 +32,7 @@ Save the file (Ctrl+S)
   4.1) Right click on the "Service.asmx" file in the "FibonacciService" project and click "Set as Start Page"
   4.2) Run the solution (Ctrl+F5)
   4.3) A web page "Service Web Service" should open
-
+```
 Now the web service is running, you can try to set "ConsoleApp1" as startup project and run it, it should display a
 console window and after 2 seconds display "55" [fibonacci(10)].
 You can do the same with the "WindowsFormsApp1" project for more features.
