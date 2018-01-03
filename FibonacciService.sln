@@ -28,11 +28,35 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "WindowsFormsApp1\WindowsFormsApp1.csproj", "{5D40264E-3D66-4789-9DAD-7915F5D4F4BB}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E985882F-6994-4F8A-B7BA-F260DD115967} = {E985882F-6994-4F8A-B7BA-F260DD115967}
+		{3ACA8287-869E-45B3-91AB-56FF3F516D53} = {3ACA8287-869E-45B3-91AB-56FF3F516D53}
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp1", "ConsoleApp1\ConsoleApp1.csproj", "{0B5A44C6-01FA-4D89-9FC8-914AD9439100}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E985882F-6994-4F8A-B7BA-F260DD115967} = {E985882F-6994-4F8A-B7BA-F260DD115967}
+	EndProjectSection
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "DBService", "DBService\", "{3ACA8287-869E-45B3-91AB-56FF3F516D53}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.7.1"
+		ProjectReferences = ""
+		Debug.AspNetCompiler.VirtualPath = "/localhost_49331"
+		Debug.AspNetCompiler.PhysicalPath = "DBService\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_49331\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_49331"
+		Release.AspNetCompiler.PhysicalPath = "DBService\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_49331\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "49331"
+		SlnRelativePath = "DBService\"
+		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
 Global
@@ -53,6 +77,10 @@ Global
 		{0B5A44C6-01FA-4D89-9FC8-914AD9439100}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B5A44C6-01FA-4D89-9FC8-914AD9439100}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0B5A44C6-01FA-4D89-9FC8-914AD9439100}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ACA8287-869E-45B3-91AB-56FF3F516D53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ACA8287-869E-45B3-91AB-56FF3F516D53}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ACA8287-869E-45B3-91AB-56FF3F516D53}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ACA8287-869E-45B3-91AB-56FF3F516D53}.Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,7 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApp1.DBService;
 using WindowsFormsApp1.ServiceReference;
 
 namespace WindowsFormsApp1
@@ -13,12 +15,56 @@ namespace WindowsFormsApp1
     {
         // The webservice client, built on constructor and closed during the "FormClosing" event
         private ServiceSoapClient mClient;
-        
+
+        private static ServiceClient mClientDB;
+        public ServiceClient ClientDB {
+            get
+            {
+                if (mClientDB == null)
+                    mClientDB = new ServiceClient();
+
+                if (mClientDB.State != System.ServiceModel.CommunicationState.Opened)
+                    mClientDB.Open();
+
+                return mClientDB;
+            }
+        }
+
         public MainForm()
         {
-            InitializeComponent();
-
             mClient = new ServiceSoapClient();
+
+            RetrieveEmployees();
+            RetrieveDepartments();
+
+            InitializeComponent();
+        }
+
+        private async void RetrieveEmployees()
+        {
+            Task<List<Employees>> listEmployeesTask = ClientDB.GetEmployeesAsync();
+            List<Employees> listEmployees = await listEmployeesTask;
+
+            foreach (Employees e in listEmployees)
+            {
+                e.EmployeesDetails = await ClientDB.GetEmployeeDetailsAsync(e.Id);
+            }
+
+            cbEmployees.DataSource = listEmployees;
+            cbEmployees.DisplayMember = "FirstName";
+
+            employeesBindingSource.DataSource = await listEmployeesTask;
+        }
+
+        private async void RetrieveDepartments()
+        {
+            Task<List<Departments>> listDepartmentsTask = ClientDB.GetDepartmentsAsync();
+            List<Departments> listDepartments = await listDepartmentsTask;
+
+            cbDepartments.DataSource = listDepartments;
+            cbDepartments.DisplayMember = "Name";
+
+            departmentsBindingSource.DataSource = listDepartments;
         }
 
         /// <summary><c>ComputeFibonacci</c> is a function preparing the task that will call the
@@ -30,11 +76,19 @@ namespace WindowsFormsApp1
             BusyForm mBusyForm = new BusyForm();
             mBusyForm.Show(this);
 
-            Task<decimal> fibonacciTask = FibonacciAsync(decimal.ToInt32(nudNumber.Value));
-            decimal fibonacci = await fibonacciTask;
+            try
+            { 
+                Task<decimal> fibonacciTask = FibonacciAsync(decimal.ToInt32(nudNumber.Value));
+                decimal fibonacci = await fibonacciTask;
 
-            mBusyForm.Close();
-            MessageBox.Show(this, fibonacci.ToString());
+                mBusyForm.Close();
+                MessageBox.Show(this, fibonacci.ToString());
+            }
+            catch(Exception ex)
+            {
+                mBusyForm.Close();
+                MessageBox.Show(this, ex.Message);
+            }
         }
 
         /// <summary><c>FibonacciAsync</c> is an async function used to start the asynchronous<c>Task</c>
@@ -153,6 +207,127 @@ namespace WindowsFormsApp1
             }
         }
 
+        private async void cbEmployees_SelectedIndexChanged(object sender, EventArgs ev)
+        {
+            BusyForm mBusyForm = new BusyForm();
+            mBusyForm.Show(this);
+
+            try
+            {
+                Employees e = (Employees) cbEmployees.SelectedItem;
+                EmployeesDetails ed = await ClientDB.GetEmployeeDetailsAsync((int)cbEmployees.SelectedValue);
+                if (ed != null)
+                {
+                    tbFirstName.Text = e.FirstName;
+                    tbLastName.Text = e.LastName;
+                    tbGender.Text = e.Gender;
+                    tbJobTitle.Text = ed.JobTitle;
+                    tbSalary.Text = ed.Salary.ToString();
+                    cbDepartments.SelectedValue = ed.DepartmentId;
+
+                    Departments d = await ClientDB.GetDepartmentAsync(ed.DepartmentId);
+                    cbDepartments.SelectedValue = d.Id;
+                }
+                mBusyForm.Close();
+            }
+            catch (Exception ex)
+            {
+                mBusyForm.Close();
+                MessageBox.Show(this, ex.Message);
+            }
+        }
+
+        private async void bSave_Click(object sender, EventArgs e)
+        {
+            BusyForm mBusyForm = new BusyForm();
+            mBusyForm.Show(this);
+
+            try
+            {
+                Employees employee = new Employees()
+                {
+                    Id = (int)cbEmployees.SelectedValue,
+                    FirstName = tbFirstName.Text,
+                    LastName = tbLastName.Text,
+                    Gender = tbGender.Text,
+                    EmployeesDetails = new EmployeesDetails()
+                    {
+                        JobTitle = tbJobTitle.Text,
+                        Salary = int.Parse(tbSalary.Text),
+                        Id = (int)cbEmployees.SelectedValue,
+                        DepartmentId = (int)cbDepartments.SelectedValue
+                    }
+                };
+                int result = await ClientDB.SaveEmployeeAsync(employee);
+                mBusyForm.Close();
+            }
+            catch (Exception ex)
+            {
+                mBusyForm.Close();
+                MessageBox.Show(this, ex.Message);
+            }
+        }
+
+        private async void departmentsBindingNavigatorSaveItem_Click(object sender, EventArgs e)
+        {
+            BusyForm mBusyForm = new BusyForm();
+            mBusyForm.Show(this);
+
+            try
+            {
+                foreach (Departments departments in (List<Departments>)departmentsBindingSource.DataSource)
+                {
+                    Departments department = new Departments()
+                    {
+                        Id = departments.Id,
+                        Name = departments.Name,
+                        Location = departments.Location
+                    };
+                    int result = await ClientDB.SaveDepartmentAsync(department);
+                }
+                mBusyForm.Close();
+            }
+            catch (Exception ex)
+            {
+                mBusyForm.Close();
+                MessageBox.Show(this, ex.Message);
+            }
+        }
+
+        private async void employeesBindingNavigatorSaveItem_Click(object sender, EventArgs e)
+        {
+            BusyForm mBusyForm = new BusyForm();
+            mBusyForm.Show(this);
+
+            try
+            {
+                foreach (Employees employees in (List<Employees>)employeesBindingSource.DataSource)
+                {
+                    Employees employee = new Employees()
+                    {
+                        Id = employees.Id,
+                        FirstName = employees.FirstName,
+                        LastName = employees.LastName,
+                        Gender = employees.Gender,
+                        EmployeesDetails = new EmployeesDetails()
+                        {
+                            JobTitle = employees.EmployeesDetails.JobTitle,
+                            Salary = employees.EmployeesDetails.Salary,
+                            Id = employees.Id,
+                            DepartmentId = employees.EmployeesDetails.DepartmentId
+                        }
+                    };
+                    int result = await ClientDB.SaveEmployeeAsync(employee);
+                }
+                mBusyForm.Close();
+            }
+            catch (Exception ex)
+            {
+                mBusyForm.Close();
+                MessageBox.Show(this, ex.Message);
+            }
+        }
+
         /// <summary>
         /// Function called when the form is closing
         /// </summary>
@@ -161,6 +336,7 @@ namespace WindowsFormsApp1
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             mClient.Close();
+            ClientDB.Close();
         }
     }
 }
